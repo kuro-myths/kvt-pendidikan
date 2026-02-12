@@ -8,13 +8,15 @@ use App\Models\KvtLicense;
 use App\Models\KvtEmailAccount;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class SchoolController extends Controller
 {
     public function index(Request $request)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $query = School::with(['license', 'adminSekolah']);
 
         // admin_sekolah can only see own school
@@ -48,7 +50,8 @@ class SchoolController extends Controller
 
     public function showOwn()
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $school = School::findOrFail($user->school_id);
         $school->load(['users', 'classes', 'license', 'emailAccounts']);
         return view('schools.show', compact('school'));

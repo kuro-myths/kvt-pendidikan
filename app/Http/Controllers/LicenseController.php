@@ -6,12 +6,14 @@ use App\Models\KvtLicense;
 use App\Models\School;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LicenseController extends Controller
 {
     public function index(Request $request)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $query = KvtLicense::with('school');
 
         if (!$user->isAdminKvt()) {

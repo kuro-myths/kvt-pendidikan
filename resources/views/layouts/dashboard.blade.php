@@ -29,8 +29,9 @@
             box-shadow: 0 0 0 3px rgba(255,255,255,0.05);
         }
         select option { background: #111; color: white; }
-        .sidebar-link { @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200 text-sm; }
-        .sidebar-link.active { @apply text-white bg-white/10; }
+        .sidebar-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.5rem; color: #9ca3af; font-size: 0.875rem; transition: all 0.2s; }
+        .sidebar-link:hover { color: white; background: rgba(255,255,255,0.05); }
+        .sidebar-link.active { color: white; background: rgba(255,255,255,0.1); }
 
         /* Popup Styles */
         .popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 50; display: flex; align-items: center; justify-content: center; }

@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
     public function showLogin()
     {
-        if (auth()->check()) {
+        if (Auth::check()) {
             return redirect()->route('dashboard');
         }
         return view('auth.login');
@@ -62,7 +63,7 @@ class AuthController extends Controller
 
     public function showRegisterSchool()
     {
-        if (auth()->check()) {
+        if (Auth::check()) {
             return redirect()->route('dashboard');
         }
         return view('auth.register-school');
@@ -209,6 +210,73 @@ class AuthController extends Controller
         ActivityLog::log('password_reset', "Password user {$user->nama} direset");
 
         return redirect()->route('login')->with('success', 'Password berhasil direset. Silakan login dengan password baru.');
+    }
+
+    // ========================
+    // SOCIAL LOGIN (OAuth)
+    // ========================
+
+    public function socialRedirect(string $provider)
+    {
+        if (!in_array($provider, ['github', 'google'])) {
+            return redirect()->route('login')->with('error', 'Provider tidak didukung.');
+        }
+
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function socialCallback(string $provider)
+    {
+        if (!in_array($provider, ['github', 'google'])) {
+            return redirect()->route('login')->with('error', 'Provider tidak didukung.');
+        }
+
+        try {
+            $socialUser = Socialite::driver($provider)->user();
+        } catch (\Exception $e) {
+            return redirect()->route('login')->with('error', 'Gagal login dengan ' . ucfirst($provider) . '. Silakan coba lagi.');
+        }
+
+        // Find existing user by social_id or email
+        $user = User::where('social_id', $socialUser->getId())
+            ->where('social_type', $provider)
+            ->first();
+
+        if (!$user) {
+            // Try matching by email
+            $user = User::where('email', $socialUser->getEmail())
+                ->orWhere('kvt_email', $socialUser->getEmail())
+                ->first();
+
+            if ($user) {
+                // Link social account to existing user
+                $user->update([
+                    'social_id' => $socialUser->getId(),
+                    'social_type' => $provider,
+                    'social_avatar' => $socialUser->getAvatar(),
+                ]);
+            }
+        }
+
+        if (!$user) {
+            // No matching user — cannot auto-create for this platform
+            return redirect()->route('login')->with('error', 'Akun dengan email ' . $socialUser->getEmail() . ' tidak ditemukan. Silakan daftar melalui sekolah terlebih dahulu, atau hubungi Admin KVT.');
+        }
+
+        if ($user->status !== 'aktif') {
+            return redirect()->route('login')->with('error', 'Akun Anda belum aktif. Silakan tunggu persetujuan admin.');
+        }
+
+        // Update avatar from social if not set
+        if (!$user->avatar && $socialUser->getAvatar()) {
+            $user->update(['social_avatar' => $socialUser->getAvatar()]);
+        }
+
+        Auth::login($user, true);
+
+        ActivityLog::log('social_login', "User {$user->nama} login via " . ucfirst($provider));
+
+        return redirect()->route('dashboard');
     }
 
     public function logout(Request $request)

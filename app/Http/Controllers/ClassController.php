@@ -6,12 +6,14 @@ use App\Models\SchoolClass;
 use App\Models\User;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClassController extends Controller
 {
     public function index(Request $request)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $query = SchoolClass::with(['school', 'waliKelas', 'students']);
 
         if (!$user->isAdminKvt()) {
@@ -29,7 +31,8 @@ class ClassController extends Controller
 
     public function create()
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $teachers = User::where('school_id', $user->school_id)->where('role', 'guru')->aktif()->get();
         $students = User::where('school_id', $user->school_id)->where('role', 'siswa')->aktif()->get();
 
@@ -38,7 +41,8 @@ class ClassController extends Controller
 
     public function store(Request $request)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
 
         $request->validate([
             'nama_kelas' => 'required|string|max:255',
@@ -78,7 +82,8 @@ class ClassController extends Controller
 
     public function edit(SchoolClass $class)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $teachers = User::where('school_id', $user->school_id)->where('role', 'guru')->aktif()->get();
         $students = User::where('school_id', $user->school_id)->where('role', 'siswa')->aktif()->get();
 

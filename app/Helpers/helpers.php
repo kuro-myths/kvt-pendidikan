@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 if (!function_exists('role_route')) {
     /**
      * Generate a role-prefixed route URL based on the authenticated user's role.
@@ -7,7 +9,8 @@ if (!function_exists('role_route')) {
      */
     function role_route(string $name, mixed $parameters = [], bool $absolute = true): string
     {
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
 
         $prefix = match ($user->role ?? 'siswa') {
             'admin_kvt' => 'admin',
@@ -34,7 +37,8 @@ if (!function_exists('role_route_has')) {
      */
     function role_route_has(string $name): bool
     {
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
 
         $prefix = match ($user->role ?? 'siswa') {
             'admin_kvt' => 'admin',

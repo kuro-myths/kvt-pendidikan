@@ -7,13 +7,15 @@ use App\Models\School;
 use App\Models\KvtEmailAccount;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $query = User::with('school');
 
         // Scope by school for non-admin_kvt
@@ -42,7 +44,8 @@ class UserController extends Controller
 
     public function create()
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $school = $user->isAdminKvt() ? null : School::find($user->school_id);
 
         return view('users.create', compact('school'));
@@ -50,7 +53,8 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $authUser = auth()->user();
+        /** @var User $authUser */
+        $authUser = Auth::user();
 
         $request->validate([
             'nama' => 'required|string|max:255',
@@ -174,7 +178,8 @@ class UserController extends Controller
 
     private function authorizeAccess(User $targetUser): void
     {
-        $authUser = auth()->user();
+        /** @var User $authUser */
+        $authUser = Auth::user();
 
         if ($authUser->isAdminKvt()) {
             return;

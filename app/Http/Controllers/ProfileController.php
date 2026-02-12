@@ -12,7 +12,8 @@ class ProfileController extends Controller
 {
     public function show()
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $user->load(['school', 'kvtEmailAccounts']);
 
         return view('profile.show', compact('user'));
@@ -20,13 +21,15 @@ class ProfileController extends Controller
 
     public function edit()
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         return view('profile.edit', compact('user'));
     }
 
     public function update(Request $request)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
 
         $request->validate([
             'nama' => 'required|string|max:255',
@@ -47,7 +50,8 @@ class ProfileController extends Controller
 
     public function updatePassword(Request $request)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
 
         $request->validate([
             'current_password' => 'required|string',

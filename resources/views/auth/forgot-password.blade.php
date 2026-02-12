@@ -48,6 +48,6 @@
 
 @push('scripts')
 <script>
-    gsap.from('.fade-in', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' });
+    gsap.to('.fade-in', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' });
 </script>
 @endpush

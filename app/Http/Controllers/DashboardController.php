@@ -9,12 +9,14 @@ use App\Models\KvtScore;
 use App\Models\KvtLicense;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
 
         return match ($user->role) {
             'admin_kvt' => $this->adminKvtDashboard(),
@@ -45,7 +47,8 @@ class DashboardController extends Controller
 
     private function adminSekolahDashboard()
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $schoolId = $user->school_id;
 
         $data = [
@@ -63,7 +66,8 @@ class DashboardController extends Controller
 
     private function guruDashboard()
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $schoolId = $user->school_id;
 
         $data = [
@@ -78,7 +82,8 @@ class DashboardController extends Controller
 
     private function siswaDashboard()
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
 
         $data = [
             'school' => School::find($user->school_id),

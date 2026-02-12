@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class ActivityLog extends Model
 {
@@ -37,8 +38,10 @@ class ActivityLog extends Model
     public static function log(string $action, ?string $description = null, $model = null, ?array $oldData = null, ?array $newData = null): self
     {
         return self::create([
-            'user_id' => auth()->id(),
-            'school_id' => auth()->user()?->school_id,
+            'user_id' => Auth::id(),
+            'school_id' =>
+            /** @var \App\Models\User|null */
+            Auth::user()?->school_id,
             'action' => $action,
             'model_type' => $model ? get_class($model) : null,
             'model_id' => $model?->getKey(),

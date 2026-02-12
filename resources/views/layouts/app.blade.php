@@ -34,9 +34,12 @@
         .popup-warning { border-top: 3px solid #f59e0b; }
         .popup-info { border-top: 3px solid #6b7280; }
 
-        .btn-primary { @apply bg-white text-black font-semibold px-6 py-3 rounded-lg hover:bg-gray-200 transition-all duration-200; }
-        .btn-secondary { @apply bg-transparent text-white font-semibold px-6 py-3 rounded-lg border border-gray-600 hover:border-white transition-all duration-200; }
-        .btn-danger { @apply bg-red-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition-all duration-200; }
+        .btn-primary { background: white; color: black; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 0.5rem; transition: all 0.2s; }
+        .btn-primary:hover { background: #e5e7eb; }
+        .btn-secondary { background: transparent; color: white; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 0.5rem; border: 1px solid #4b5563; transition: all 0.2s; }
+        .btn-secondary:hover { border-color: white; }
+        .btn-danger { background: #dc2626; color: white; font-weight: 600; padding: 0.5rem 1rem; border-radius: 0.5rem; transition: all 0.2s; }
+        .btn-danger:hover { background: #b91c1c; }
 
         input, select, textarea {
             background: rgba(255,255,255,0.05) !important;

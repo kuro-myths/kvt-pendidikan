@@ -7,12 +7,14 @@ use App\Models\SchoolClass;
 use App\Models\User;
 use App\Models\ActivityLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KvtScoreController extends Controller
 {
     public function index(Request $request)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $query = KvtScore::with(['student', 'schoolClass', 'penilai']);
 
         if ($user->isGuru()) {
@@ -42,7 +44,8 @@ class KvtScoreController extends Controller
 
     public function create()
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $classes = SchoolClass::where('school_id', $user->school_id)->aktif()->with('students')->get();
         $students = User::where('school_id', $user->school_id)->where('role', 'siswa')->aktif()->get();
 
@@ -51,7 +54,8 @@ class KvtScoreController extends Controller
 
     public function store(Request $request)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
 
         $request->validate([
             'student_id' => 'required|exists:users,id',
@@ -87,7 +91,8 @@ class KvtScoreController extends Controller
 
     public function show(KvtScore $score)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
 
         // Authorization: siswa can only view own scores
         if ($user->isSiswa() && $score->student_id !== $user->id) {
@@ -110,7 +115,8 @@ class KvtScoreController extends Controller
 
     public function edit(KvtScore $score)
     {
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $classes = SchoolClass::where('school_id', $user->school_id)->aktif()->with('students')->get();
 
         return view('scores.edit', compact('score', 'classes'));
