@@ -109,7 +109,7 @@ class UserController extends Controller
 
         ActivityLog::log('create_user', "User {$request->nama} ({$request->role}) ditambahkan dengan email {$kvtEmail}", $user);
 
-        return redirect()->route('users.index')->with('success', "User berhasil ditambahkan! Email KVT: {$kvtEmail}");
+        return redirect(role_route('users.index'))->with('success', "User berhasil ditambahkan! Email KVT: {$kvtEmail}");
     }
 
     public function show(User $user)
@@ -152,12 +152,14 @@ class UserController extends Controller
         $user->update($updateData);
 
         if ($request->filled('password')) {
-            $user->update(['password' => Hash::make($request->password)]);
+            // Direct assignment — User model has 'hashed' cast (auto-hashes)
+            $user->password = $request->password;
+            $user->save();
         }
 
         ActivityLog::log('update_user', "Data user {$user->nama} diperbarui", $user, $oldData, $user->toArray());
 
-        return redirect()->route('users.index')->with('success', 'Data user berhasil diperbarui.');
+        return redirect(role_route('users.index'))->with('success', 'Data user berhasil diperbarui.');
     }
 
     public function destroy(User $user)
@@ -167,7 +169,7 @@ class UserController extends Controller
         ActivityLog::log('delete_user', "User {$user->nama} dihapus", $user);
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'User berhasil dihapus.');
+        return redirect(role_route('users.index'))->with('success', 'User berhasil dihapus.');
     }
 
     private function authorizeAccess(User $targetUser): void

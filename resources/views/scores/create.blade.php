@@ -7,7 +7,7 @@
 @section('content')
 <div class="max-w-2xl">
     <div class="bg-zinc-950 border border-white/5 rounded-2xl p-8">
-        <form action="{{ route('scores.store') }}" method="POST" class="space-y-5">
+        <form action="{{ role_route('scores.store') }}" method="POST" class="space-y-5">
             @csrf
 
             <div>
@@ -64,7 +64,7 @@
 
             <div class="flex gap-3">
                 <button type="submit" class="bg-white text-black px-6 py-3 rounded-xl text-sm font-bold hover:bg-gray-200 transition-all">Simpan Nilai</button>
-                <a href="{{ route('scores.index') }}" class="border border-white/10 text-gray-400 px-6 py-3 rounded-xl text-sm font-medium hover:border-white/30 transition-all">Batal</a>
+                <a href="{{ role_route('scores.index') }}" class="border border-white/10 text-gray-400 px-6 py-3 rounded-xl text-sm font-medium hover:border-white/30 transition-all">Batal</a>
             </div>
         </form>
     </div>

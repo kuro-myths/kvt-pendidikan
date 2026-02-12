@@ -14,7 +14,13 @@ class SchoolController extends Controller
 {
     public function index(Request $request)
     {
+        $user = auth()->user();
         $query = School::with(['license', 'adminSekolah']);
+
+        // admin_sekolah can only see own school
+        if ($user->isAdminSekolah()) {
+            $query->where('id', $user->school_id);
+        }
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -36,6 +42,14 @@ class SchoolController extends Controller
 
     public function show(School $school)
     {
+        $school->load(['users', 'classes', 'license', 'emailAccounts']);
+        return view('schools.show', compact('school'));
+    }
+
+    public function showOwn()
+    {
+        $user = auth()->user();
+        $school = School::findOrFail($user->school_id);
         $school->load(['users', 'classes', 'license', 'emailAccounts']);
         return view('schools.show', compact('school'));
     }
@@ -88,6 +102,6 @@ class SchoolController extends Controller
         ActivityLog::log('delete_school', "Sekolah {$school->nama_sekolah} dihapus", $school);
         $school->delete();
 
-        return redirect()->route('schools.index')->with('success', 'Sekolah berhasil dihapus.');
+        return redirect()->route('admin.schools.index')->with('success', 'Sekolah berhasil dihapus.');
     }
 }

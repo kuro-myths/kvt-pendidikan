@@ -55,7 +55,7 @@
     <div class="bg-zinc-950 border border-white/5 rounded-2xl p-6">
         <div class="flex items-center justify-between mb-4">
             <h3 class="text-white font-bold">Nilai KVT Terbaru</h3>
-            <a href="{{ route('my-scores') }}" class="text-gray-500 hover:text-white text-xs">Lihat Semua &rarr;</a>
+            <a href="{{ route('siswa.scores.index') }}" class="text-gray-500 hover:text-white text-xs">Lihat Semua &rarr;</a>
         </div>
         @forelse($nilaiTerbaru as $nilai)
         <div class="flex items-center justify-between py-3 border-b border-white/5 last:border-0">

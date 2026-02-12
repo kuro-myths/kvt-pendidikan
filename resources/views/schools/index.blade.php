@@ -42,7 +42,7 @@
                 @forelse($schools as $school)
                 <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
                     <td class="px-6 py-4">
-                        <a href="{{ route('schools.show', $school) }}" class="text-white font-medium hover:underline">{{ $school->nama_sekolah }}</a>
+                        <a href="{{ route('admin.schools.show', $school) }}" class="text-white font-medium hover:underline">{{ $school->nama_sekolah }}</a>
                         <p class="text-gray-600 text-xs">{{ $school->jenjang }}</p>
                     </td>
                     <td class="px-6 py-4 text-gray-400 font-mono">{{ $school->npsn }}</td>
@@ -81,7 +81,7 @@
                             </form>
                             @endif
                             @endif
-                            <a href="{{ route('schools.show', $school) }}" class="bg-white/5 text-gray-400 px-3 py-1.5 rounded-lg text-xs hover:bg-white/10 transition-colors">Detail</a>
+                            <a href="{{ route('admin.schools.show', $school) }}" class="bg-white/5 text-gray-400 px-3 py-1.5 rounded-lg text-xs hover:bg-white/10 transition-colors">Detail</a>
                         </div>
                     </td>
                 </tr>

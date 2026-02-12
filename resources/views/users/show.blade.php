@@ -27,8 +27,8 @@
         </div>
 
         <div class="mt-6 flex gap-2">
-            <a href="{{ route('users.edit', $user) }}" class="flex-1 bg-white text-black py-2.5 rounded-xl text-sm font-bold hover:bg-gray-200 transition-all text-center">Edit</a>
-            <form action="{{ route('users.destroy', $user) }}" method="POST" class="flex-1" onsubmit="return confirm('Hapus user ini?')">
+            <a href="{{ role_route('users.edit', $user) }}" class="flex-1 bg-white text-black py-2.5 rounded-xl text-sm font-bold hover:bg-gray-200 transition-all text-center">Edit</a>
+            <form action="{{ role_route('users.destroy', $user) }}" method="POST" class="flex-1" onsubmit="return confirm('Hapus user ini?')">
                 @csrf @method('DELETE')
                 <button type="submit" class="w-full border border-red-500/20 text-red-400 py-2.5 rounded-xl text-sm font-medium hover:bg-red-500/10 transition-all">Hapus</button>
             </form>

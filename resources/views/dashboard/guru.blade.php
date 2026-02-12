@@ -25,7 +25,7 @@
     <div class="bg-zinc-950 border border-white/5 rounded-2xl p-6">
         <div class="flex items-center justify-between mb-4">
             <h3 class="text-white font-bold">Kelas Saya</h3>
-            <a href="{{ route('scores.create') }}" class="bg-white text-black px-4 py-2 rounded-lg text-xs font-semibold hover:bg-gray-200 transition-all">+ Tambah Nilai</a>
+            <a href="{{ route('guru.scores.create') }}" class="bg-white text-black px-4 py-2 rounded-lg text-xs font-semibold hover:bg-gray-200 transition-all">+ Tambah Nilai</a>
         </div>
         @forelse($kelasDiajar as $kelas)
         <div class="py-3 border-b border-white/5 last:border-0">

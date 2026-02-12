@@ -54,7 +54,7 @@ class LicenseController extends Controller
 
         ActivityLog::log('create_license', "Lisensi {$request->tipe_lisensi} dibuat", $license);
 
-        return redirect()->route('licenses.index')->with('success', 'Lisensi berhasil dibuat.');
+        return redirect(role_route('licenses.index'))->with('success', 'Lisensi berhasil dibuat.');
     }
 
     public function edit(KvtLicense $license)
@@ -84,7 +84,7 @@ class LicenseController extends Controller
 
         ActivityLog::log('update_license', 'Lisensi diperbarui', $license);
 
-        return redirect()->route('licenses.index')->with('success', 'Lisensi berhasil diperbarui.');
+        return redirect(role_route('licenses.index'))->with('success', 'Lisensi berhasil diperbarui.');
     }
 
     public function destroy(KvtLicense $license)
@@ -92,6 +92,6 @@ class LicenseController extends Controller
         ActivityLog::log('delete_license', 'Lisensi dihapus', $license);
         $license->delete();
 
-        return redirect()->route('licenses.index')->with('success', 'Lisensi berhasil dihapus.');
+        return redirect(role_route('licenses.index'))->with('success', 'Lisensi berhasil dihapus.');
     }
 }

@@ -82,7 +82,30 @@ class KvtScoreController extends Controller
 
         ActivityLog::log('create_score', "Nilai KVT ditambahkan untuk siswa ID {$request->student_id}", $score);
 
-        return redirect()->route('scores.index')->with('success', 'Nilai KVT berhasil ditambahkan.');
+        return redirect(role_route('scores.index'))->with('success', 'Nilai KVT berhasil ditambahkan.');
+    }
+
+    public function show(KvtScore $score)
+    {
+        $user = auth()->user();
+
+        // Authorization: siswa can only view own scores
+        if ($user->isSiswa() && $score->student_id !== $user->id) {
+            abort(403);
+        }
+
+        // guru can only view scores they created
+        if ($user->isGuru() && $score->dinilai_oleh !== $user->id) {
+            abort(403);
+        }
+
+        // admin_sekolah can only view scores from their school
+        if ($user->isAdminSekolah() && $score->school_id !== $user->school_id) {
+            abort(403);
+        }
+
+        $score->load(['student', 'schoolClass', 'penilai']);
+        return view('scores.show', compact('score'));
     }
 
     public function edit(KvtScore $score)
@@ -119,7 +142,7 @@ class KvtScoreController extends Controller
 
         ActivityLog::log('update_score', 'Nilai KVT diperbarui', $score, $oldData, $score->toArray());
 
-        return redirect()->route('scores.index')->with('success', 'Nilai KVT berhasil diperbarui.');
+        return redirect(role_route('scores.index'))->with('success', 'Nilai KVT berhasil diperbarui.');
     }
 
     public function destroy(KvtScore $score)
@@ -127,6 +150,6 @@ class KvtScoreController extends Controller
         ActivityLog::log('delete_score', 'Nilai KVT dihapus', $score);
         $score->delete();
 
-        return redirect()->route('scores.index')->with('success', 'Nilai KVT berhasil dihapus.');
+        return redirect(role_route('scores.index'))->with('success', 'Nilai KVT berhasil dihapus.');
     }
 }

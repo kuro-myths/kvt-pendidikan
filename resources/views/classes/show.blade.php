@@ -28,8 +28,8 @@
 
     {{-- Actions --}}
     <div class="flex gap-3">
-        <a href="{{ route('classes.edit', $class) }}" class="bg-white text-black px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-gray-200 transition-all">Edit Kelas</a>
-        <a href="{{ route('classes.index') }}" class="border border-white/10 text-gray-400 px-5 py-2.5 rounded-xl text-sm font-medium hover:border-white/30 transition-all">Kembali</a>
+        @if(role_route_has('classes.edit'))<a href="{{ role_route('classes.edit', $class) }}" class="bg-white text-black px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-gray-200 transition-all">Edit Kelas</a>@endif
+        <a href="{{ role_route('classes.index') }}" class="border border-white/10 text-gray-400 px-5 py-2.5 rounded-xl text-sm font-medium hover:border-white/30 transition-all">Kembali</a>
     </div>
 
     {{-- Student List --}}
@@ -51,7 +51,7 @@
                     <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
                         <td class="px-6 py-3 text-sm text-gray-500">{{ $i + 1 }}</td>
                         <td class="px-6 py-3">
-                            <a href="{{ route('users.show', $student) }}" class="text-white text-sm font-semibold hover:underline">{{ $student->nama }}</a>
+                            <a href="{{ role_route('users.show', $student) }}" class="text-white text-sm font-semibold hover:underline">{{ $student->nama }}</a>
                         </td>
                         <td class="px-6 py-3 text-sm text-gray-400 font-mono">{{ $student->nisn ?? '-' }}</td>
                         <td class="px-6 py-3 text-sm text-gray-400 font-mono">{{ $student->kvt_email ?? '-' }}</td>

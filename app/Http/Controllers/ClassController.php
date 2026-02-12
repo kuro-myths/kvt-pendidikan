@@ -67,7 +67,7 @@ class ClassController extends Controller
 
         ActivityLog::log('create_class', "Kelas {$request->nama_kelas} dibuat", $class);
 
-        return redirect()->route('classes.index')->with('success', 'Kelas berhasil dibuat.');
+        return redirect(role_route('classes.index'))->with('success', 'Kelas berhasil dibuat.');
     }
 
     public function show(SchoolClass $class)
@@ -106,7 +106,7 @@ class ClassController extends Controller
 
         ActivityLog::log('update_class', "Kelas {$class->nama_kelas} diperbarui", $class);
 
-        return redirect()->route('classes.index')->with('success', 'Kelas berhasil diperbarui.');
+        return redirect(role_route('classes.index'))->with('success', 'Kelas berhasil diperbarui.');
     }
 
     public function destroy(SchoolClass $class)
@@ -114,6 +114,6 @@ class ClassController extends Controller
         ActivityLog::log('delete_class', "Kelas {$class->nama_kelas} dihapus", $class);
         $class->delete();
 
-        return redirect()->route('classes.index')->with('success', 'Kelas berhasil dihapus.');
+        return redirect(role_route('classes.index'))->with('success', 'Kelas berhasil dihapus.');
     }
 }

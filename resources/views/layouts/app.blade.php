@@ -105,16 +105,16 @@
                 message: '',
                 init() {
                     @if(session('success'))
-                        this.open('success', 'Berhasil', '{{ session('success') }}');
+                        this.open('success', 'Berhasil', @json(session('success')));
                     @endif
                     @if(session('error'))
-                        this.open('error', 'Terjadi Kesalahan', '{{ session('error') }}');
+                        this.open('error', 'Terjadi Kesalahan', @json(session('error')));
                     @endif
                     @if(session('warning'))
-                        this.open('warning', 'Peringatan', '{{ session('warning') }}');
+                        this.open('warning', 'Peringatan', @json(session('warning')));
                     @endif
                     @if(session('info'))
-                        this.open('info', 'Informasi', '{{ session('info') }}');
+                        this.open('info', 'Informasi', @json(session('info')));
                     @endif
                 },
                 open(type, title, message) {

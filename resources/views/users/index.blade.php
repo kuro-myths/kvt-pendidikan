@@ -21,7 +21,7 @@
             <button type="submit" class="bg-white text-black px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-gray-200 transition-all">Filter</button>
         </form>
     </div>
-    <a href="{{ route('users.create') }}" class="bg-white text-black px-5 py-3 rounded-xl text-sm font-bold hover:bg-gray-200 transition-all whitespace-nowrap flex items-center gap-2">
+    <a href="{{ role_route('users.create') }}" class="bg-white text-black px-5 py-3 rounded-xl text-sm font-bold hover:bg-gray-200 transition-all whitespace-nowrap flex items-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
         Tambah User
     </a>
@@ -65,8 +65,8 @@
                     </td>
                     <td class="px-6 py-4 text-right">
                         <div class="flex items-center justify-end gap-2">
-                            <a href="{{ route('users.edit', $user) }}" class="bg-white/5 text-gray-400 px-3 py-1.5 rounded-lg text-xs hover:bg-white/10 transition-colors">Edit</a>
-                            <form action="{{ route('users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Yakin hapus user ini?')">
+                            <a href="{{ role_route('users.edit', $user) }}" class="bg-white/5 text-gray-400 px-3 py-1.5 rounded-lg text-xs hover:bg-white/10 transition-colors">Edit</a>
+                            <form action="{{ role_route('users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Yakin hapus user ini?')">
                                 @csrf @method('DELETE')
                                 <button class="bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg text-xs hover:bg-red-500/20 transition-colors">Hapus</button>
                             </form>

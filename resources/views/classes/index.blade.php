@@ -17,7 +17,7 @@
                 @endfor
             </select>
         </form>
-        <a href="{{ route('classes.create') }}" class="bg-white text-black px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-gray-200 transition-all">+ Tambah Kelas</a>
+        <a href="{{ role_route('classes.create') }}" class="bg-white text-black px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-gray-200 transition-all">+ Tambah Kelas</a>
     </div>
 
     {{-- Table --}}
@@ -37,7 +37,7 @@
                     @forelse($classes as $class)
                     <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
                         <td class="px-6 py-4">
-                            <a href="{{ route('classes.show', $class) }}" class="text-white font-semibold text-sm hover:underline">{{ $class->nama_kelas }}</a>
+                            <a href="{{ role_route('classes.show', $class) }}" class="text-white font-semibold text-sm hover:underline">{{ $class->nama_kelas }}</a>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-400">{{ $class->jurusan ?? '-' }}</td>
                         <td class="px-6 py-4 text-center"><span class="bg-white/10 text-white px-2.5 py-1 rounded-lg text-xs font-bold">{{ $class->tingkat }}</span></td>
@@ -46,8 +46,8 @@
                         <td class="px-6 py-4 text-sm text-gray-400">{{ $class->tahun_ajaran }} / {{ ucfirst($class->semester) }}</td>
                         <td class="px-6 py-4 text-right">
                             <div class="flex justify-end gap-2">
-                                <a href="{{ route('classes.edit', $class) }}" class="text-gray-500 hover:text-white text-xs px-3 py-1.5 rounded-lg border border-white/10 hover:border-white/30 transition-all">Edit</a>
-                                <form action="{{ route('classes.destroy', $class) }}" method="POST" onsubmit="return confirm('Hapus kelas ini?')">
+                                <a href="{{ role_route('classes.edit', $class) }}" class="text-gray-500 hover:text-white text-xs px-3 py-1.5 rounded-lg border border-white/10 hover:border-white/30 transition-all">Edit</a>
+                                <form action="{{ role_route('classes.destroy', $class) }}" method="POST" onsubmit="return confirm('Hapus kelas ini?')">
                                     @csrf @method('DELETE')
                                     <button class="text-red-400 hover:text-red-300 text-xs px-3 py-1.5 rounded-lg border border-red-500/20 hover:border-red-500/40 transition-all">Hapus</button>
                                 </form>

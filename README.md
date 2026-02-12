@@ -53,12 +53,14 @@ Platform ini dirancang sebagai sistem multi-tenant di mana setiap sekolah berope
 ## ✨ Fitur Utama
 
 ### 🏫 Manajemen Sekolah
+
 - Pendaftaran sekolah otomatis via NPSN
 - Approval/reject sekolah oleh Admin KVT
 - Generate School Code otomatis (kvt.1, kvt.2, ...)
 - Toggle status sekolah (aktif/nonaktif)
 
 ### 📧 Sistem Email @kvt.id
+
 - Setiap user mendapat email KVT otomatis
 - Format: `nama.user@kvt.1`, `nama.user@kvt.2`
 - Siswa dengan NISN: `12345.nama@kvt.1`
@@ -66,36 +68,42 @@ Platform ini dirancang sebagai sistem multi-tenant di mana setiap sekolah berope
 - Email digunakan sebagai login credential
 
 ### 👥 Manajemen User (CRUD Lengkap)
+
 - Tambah/edit/hapus guru & siswa
 - Email KVT otomatis saat registrasi
 - Status: aktif, nonaktif, pending
 - Pencarian & filter berdasarkan role
 
 ### 📚 Manajemen Kelas
+
 - Buat kelas dengan jurusan, tingkat, tahun ajaran
 - Assign wali kelas (guru)
 - Daftarkan siswa ke kelas (many-to-many)
 - Semester: Ganjil/Genap
 
 ### 📝 Penilaian KVT
+
 - Input nilai per kompetensi vokasi
 - Predikat otomatis: A (≥90), B (≥80), C (≥70), D (≥60), E (<60)
 - Filter per semester & tahun ajaran
 - Riwayat nilai lengkap per siswa
 
 ### 🔑 Sistem Lisensi
+
 - 3 tier: **Basic**, **Pro**, **Premium**
 - Kuota guru, siswa, kelas per tier
 - Masa berlaku dengan auto-expire
 - Upgrade/downgrade lisensi
 
 ### 📊 Dashboard Role-Based
+
 - **Admin KVT**: Statistik global, approval sekolah, activity log
 - **Admin Sekolah**: Info sekolah, statistik lokal, quick actions
 - **Guru**: Kelas yang diajar, input nilai, riwayat penilaian
 - **Siswa**: Profil, kelas, nilai KVT terbaru, rata-rata
 
 ### 🎨 UI/UX
+
 - **Monochrome dark theme** (hitam-putih-abu)
 - **GSAP ScrollTrigger** animations di landing page
 - **Alpine.js** popups & interactive components
@@ -142,18 +150,18 @@ Platform ini dirancang sebagai sistem multi-tenant di mana setiap sekolah berope
 
 ## 🛠 Tech Stack
 
-| Komponen | Teknologi | Versi |
-|----------|-----------|-------|
-| Backend | Laravel | 12.x |
-| PHP | PHP | 8.2+ |
-| Database | MySQL | 8.0 |
-| Frontend CSS | Tailwind CSS | 3.x (CDN) |
-| Interactivity | Alpine.js | 3.x (CDN) |
-| Animations | GSAP + ScrollTrigger | 3.12.5 (CDN) |
-| Font | Inter | Google Fonts |
-| Local Dev | Laragon | 6.x |
-| Template | Blade | Laravel Built-in |
-| Auth | Laravel Auth | Session-based |
+| Komponen      | Teknologi            | Versi            |
+| ------------- | -------------------- | ---------------- |
+| Backend       | Laravel              | 12.x             |
+| PHP           | PHP                  | 8.2+             |
+| Database      | MySQL                | 8.0              |
+| Frontend CSS  | Tailwind CSS         | 3.x (CDN)        |
+| Interactivity | Alpine.js            | 3.x (CDN)        |
+| Animations    | GSAP + ScrollTrigger | 3.12.5 (CDN)     |
+| Font          | Inter                | Google Fonts     |
+| Local Dev     | Laragon              | 6.x              |
+| Template      | Blade                | Laravel Built-in |
+| Auth          | Laravel Auth         | Session-based    |
 
 ---
 
@@ -251,12 +259,12 @@ Akses: `http://localhost:8000`
 
 Setelah menjalankan seeder, akun-akun berikut siap digunakan:
 
-| Role | Email KVT | Password | Akses |
-|------|-----------|----------|-------|
-| **Admin KVT** | `universe.kvt@kvt.id` | `admin12345` | Kelola semua sekolah, lisensi, approval |
-| **Admin Sekolah** | `admin.smkn1@kvt.1` | `sekolah123` | Kelola user, kelas, nilai di sekolahnya |
-| **Guru** | `budi.santoso@kvt.1` | `guru12345` | Input nilai, lihat kelas yang diajar |
-| **Siswa** | `rizki.pratama@kvt.1` | `siswa12345` | Lihat nilai & kelas |
+| Role              | Email KVT             | Password     | Akses                                   |
+| ----------------- | --------------------- | ------------ | --------------------------------------- |
+| **Admin KVT**     | `universe.kvt@kvt.id` | `admin12345` | Kelola semua sekolah, lisensi, approval |
+| **Admin Sekolah** | `admin.smkn1@kvt.1`   | `sekolah123` | Kelola user, kelas, nilai di sekolahnya |
+| **Guru**          | `budi.santoso@kvt.1`  | `guru12345`  | Input nilai, lihat kelas yang diajar    |
+| **Siswa**         | `rizki.pratama@kvt.1` | `siswa12345` | Lihat nilai & kelas                     |
 
 Sekolah pending (untuk testing approval): **SMK Negeri 3 Bandung** (`kvt.2`)
 
@@ -349,15 +357,16 @@ API ini menggunakan School Code (kvt.1, kvt.2) sebagai identifier untuk integras
 
 Setiap user yang terdaftar di Universe KVT mendapat email unik berdasarkan kode sekolah:
 
-| Role | Format | Contoh |
-|------|--------|--------|
-| Admin KVT | `universe.kvt@kvt.id` | `universe.kvt@kvt.id` |
-| Admin Sekolah | `nama.admin@kvt.{N}` | `admin.smkn1@kvt.1` |
-| Guru | `nama.lengkap@kvt.{N}` | `budi.santoso@kvt.1` |
-| Siswa | `nisn.nama@kvt.{N}` | `12345.rizki.pratama@kvt.1` |
-| Siswa (tanpa NISN) | `nama.lengkap@kvt.{N}` | `dewi.lestari@kvt.2` |
+| Role               | Format                 | Contoh                      |
+| ------------------ | ---------------------- | --------------------------- |
+| Admin KVT          | `universe.kvt@kvt.id`  | `universe.kvt@kvt.id`       |
+| Admin Sekolah      | `nama.admin@kvt.{N}`   | `admin.smkn1@kvt.1`         |
+| Guru               | `nama.lengkap@kvt.{N}` | `budi.santoso@kvt.1`        |
+| Siswa              | `nisn.nama@kvt.{N}`    | `12345.rizki.pratama@kvt.1` |
+| Siswa (tanpa NISN) | `nama.lengkap@kvt.{N}` | `dewi.lestari@kvt.2`        |
 
 Email KVT berfungsi sebagai:
+
 - Login credential utama
 - Identitas resmi dalam platform
 - Tercatat di tabel `kvt_email_accounts`
@@ -366,16 +375,16 @@ Email KVT berfungsi sebagai:
 
 ## 🔑 Sistem Lisensi
 
-| Fitur | Basic | Pro | Premium |
-|-------|-------|-----|---------|
-| Maks. Guru | 10 | 50 | 200 |
-| Maks. Siswa | 100 | 500 | 2.000 |
-| Maks. Kelas | 5 | 20 | 100 |
-| Email @kvt.id | ✅ | ✅ | ✅ |
-| Penilaian KVT | ✅ | ✅ | ✅ |
-| Dashboard | ✅ | ✅ | ✅ |
-| API Akses | ❌ | ✅ | ✅ |
-| Prioritas Support | ❌ | ✅ | ✅ |
+| Fitur             | Basic | Pro | Premium |
+| ----------------- | ----- | --- | ------- |
+| Maks. Guru        | 10    | 50  | 200     |
+| Maks. Siswa       | 100   | 500 | 2.000   |
+| Maks. Kelas       | 5     | 20  | 100     |
+| Email @kvt.id     | ✅    | ✅  | ✅      |
+| Penilaian KVT     | ✅    | ✅  | ✅      |
+| Dashboard         | ✅    | ✅  | ✅      |
+| API Akses         | ❌    | ✅  | ✅      |
+| Prioritas Support | ❌    | ✅  | ✅      |
 
 Lisensi Basic otomatis diberikan saat sekolah disetujui. Upgrade via Admin KVT.
 
@@ -383,28 +392,31 @@ Lisensi Basic otomatis diberikan saat sekolah disetujui. Upgrade via Admin KVT.
 
 ## 👤 Role & Hak Akses
 
-| Aksi | Admin KVT | Admin Sekolah | Guru | Siswa |
-|------|-----------|---------------|------|-------|
-| Kelola semua sekolah | ✅ | ❌ | ❌ | ❌ |
-| Approve/reject sekolah | ✅ | ❌ | ❌ | ❌ |
-| CRUD lisensi | ✅ | View only | ❌ | ❌ |
-| CRUD user (guru/siswa) | ✅ | ✅ (own school) | ❌ | ❌ |
-| CRUD kelas | ✅ | ✅ (own school) | ❌ | ❌ |
-| Input nilai KVT | ✅ | ✅ | ✅ | ❌ |
-| Lihat nilai | ✅ | ✅ | ✅ (own) | ✅ (own) |
-| Dashboard | ✅ | ✅ | ✅ | ✅ |
+| Aksi                   | Admin KVT | Admin Sekolah   | Guru     | Siswa    |
+| ---------------------- | --------- | --------------- | -------- | -------- |
+| Kelola semua sekolah   | ✅        | ❌              | ❌       | ❌       |
+| Approve/reject sekolah | ✅        | ❌              | ❌       | ❌       |
+| CRUD lisensi           | ✅        | View only       | ❌       | ❌       |
+| CRUD user (guru/siswa) | ✅        | ✅ (own school) | ❌       | ❌       |
+| CRUD kelas             | ✅        | ✅ (own school) | ❌       | ❌       |
+| Input nilai KVT        | ✅        | ✅              | ✅       | ❌       |
+| Lihat nilai            | ✅        | ✅              | ✅ (own) | ✅ (own) |
+| Dashboard              | ✅        | ✅              | ✅       | ✅       |
 
 ---
 
 ## 📸 Screenshots
 
 ### Landing Page
+
 > Monochrome dark theme dengan animasi GSAP ScrollTrigger — hero, features grid, 3-step how-it-works, email showcase, pricing cards, CTA.
 
 ### Dashboard Admin KVT
+
 > Statistik global, pending schools approval, recent activity log.
 
 ### Dashboard Siswa
+
 > Profil, daftar kelas, nilai KVT terbaru, rata-rata nilai.
 
 ---
