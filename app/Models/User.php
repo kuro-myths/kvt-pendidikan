@@ -81,6 +81,18 @@ class User extends Authenticatable
         return $this->hasMany(KvtEmailAccount::class);
     }
 
+    public function eduTools()
+    {
+        return $this->belongsToMany(EduTool::class, 'user_edu_tools')
+            ->withPivot(['status', 'claimed_at', 'kvt_email_used', 'expires_at', 'notes'])
+            ->withTimestamps();
+    }
+
+    public function activeEduTools()
+    {
+        return $this->eduTools()->wherePivot('status', 'aktif');
+    }
+
     public function scopeByRole($query, $role)
     {
         return $query->where('role', $role);

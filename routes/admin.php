@@ -7,11 +7,28 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\KvtScoreController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\EduToolController;
 
 // ============================================================
 // ADMIN KVT ROUTES — prefix: /admin, name: admin.
 // Middleware: auth, school.access, role:admin_kvt
 // ============================================================
+
+// Edu Tools Management (admin CRUD + approve/reject klaim)
+Route::prefix('edu-tools')->name('edu-tools.')->controller(EduToolController::class)->group(function () {
+    Route::get('/', 'adminIndex')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+    Route::get('/catalog', 'index')->name('catalog');
+    Route::get('/my-tools', 'myTools')->name('my-tools');
+    Route::get('/{eduTool}', 'show')->name('show');
+    Route::get('/{eduTool}/edit', 'edit')->name('edit');
+    Route::put('/{eduTool}', 'update')->name('update');
+    Route::delete('/{eduTool}', 'destroy')->name('destroy');
+    Route::post('/{eduTool}/claim', 'claim')->name('claim');
+    Route::post('/claims/{userEduTool}/approve', 'approve')->name('approve');
+    Route::post('/claims/{userEduTool}/reject', 'reject')->name('reject');
+});
 
 // Schools Management
 Route::controller(SchoolController::class)->prefix('schools')->name('schools.')->group(function () {
